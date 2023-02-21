@@ -1,9 +1,7 @@
-import React from 'react';
+import { collatedTasks } from "../constants";
 
-type Props = {};
+const collatedTasksExist = (selectedProject: string | number) => {
+  return !!collatedTasks.find(task => task.key === selectedProject);
+}
 
-const index = (props: Props) => {
-  return <div>index</div>;
-};
-
-export default index;
+export { collatedTasksExist }

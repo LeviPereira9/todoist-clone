@@ -13,6 +13,9 @@
 
 #Firebase
 ./src/firebase.tsx
+../src/firebase.tsx
+firebase.tsx
+
 
 # misc
 .DS_Store

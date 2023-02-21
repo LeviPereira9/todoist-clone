@@ -1,9 +1,7 @@
-import React from 'react';
+const collatedTasks = [
+  {key: 'INBOX', name: 'Inbox'},
+  {key: 'TODAY', name: 'Today'},
+  {key: 'NEXT_7', name: 'Next 7 Days'}
+];
 
-type Props = {};
-
-const index = (props: Props) => {
-  return <div>index</div>;
-};
-
-export default index;
+export {collatedTasks};
