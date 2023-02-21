@@ -9,6 +9,8 @@ import {
   where,
   getDocs,
   orderBy,
+  onSnapshot,
+  QuerySnapshot,
 } from 'firebase/firestore';
 
 //date
@@ -34,78 +36,76 @@ const useTasks = (selectedProject: string | number) => {
 
   // Define um efeito colateral que será executado quando o componente for montado e sempre que a propriedade `selectedProject` mudar
   useEffect(() => {
-    const fetchTask = async () => {
-      // Cria uma referência para a coleção 'tasks' no Firebase
-      const tasksCollectionRef: CollectionReference<tasksType> = collection(
-        db,
-        'tasks',
-      ) as CollectionReference<tasksType>;
+    // Cria uma referência para a coleção 'tasks' no Firebase
+    const tasksCollectionRef: CollectionReference<tasksType> = collection(
+      db,
+      'tasks',
+    ) as CollectionReference<tasksType>;
 
-      // Cria uma query para buscar todas as tarefas do usuário.
-      let tasksQuery = query<tasksType>(
+    // Cria uma query para buscar todas as tarefas do usuário.
+    let tasksQuery = query<tasksType>(
+      tasksCollectionRef,
+      where('userid', '==', 'wTJzDkRGVShfYX9L'),
+    );
+
+    if (selectedProject && !collatedTasksExist(selectedProject)) {
+      // Se a propriedade `selectedProject` for verdadeira e não existir uma coleção de tarefas agrupadas por projeto
+      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas do usuário que pertencem ao projeto selecionado
         tasksCollectionRef,
-        where('userid', '==', 'wTJzDkRGVShfYX9L'),
+        where('userId', '==', 'wTJzDkRGVShfYX9L'),
+        where('projectId', '==', selectedProject),
       );
-
-      if (selectedProject && !collatedTasksExist(selectedProject)) {
-        // Se a propriedade `selectedProject` for verdadeira e não existir uma coleção de tarefas agrupadas por projeto
-        tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas do usuário que pertencem ao projeto selecionado
-          tasksCollectionRef,
-          where('userId', '==', 'wTJzDkRGVShfYX9L'),
-          where('projectId', '==', selectedProject),
-        );
-      } else if (selectedProject === 'TODAY') {
-        // Se a propriedade `selectedProject` for igual a 'TODAY'
-        tasksQuery = query<tasksType>(
-          tasksCollectionRef,
-          where('userId', '==', 'wTJzDkRGVShfYX9L'),
-          where('date', '==', moment().format('DD/MM/YYYY')),
-        );
-      } else if (selectedProject === 'INBOX' || selectedProject === 0) {
-        // Se a propriedade `selectedProject` for igual a 'INBOX' ou igual a 0
-        tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas do usuário que ainda não têm data
-          tasksCollectionRef,
-          where('userId', '==', 'wTJzDkRGVShfYX9L'),
-          where('date', '==', ''),
-        );
-      }
-
-      const unsubscribe = await getDocs<tasksType>(tasksQuery);
-
-      const newTasks = unsubscribe.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      const filteredTasks = newTasks.filter(task => task.archived !== true);
-      const filteredArchivedTasks = newTasks.filter(
-        task => task.archived !== false,
+    } else if (selectedProject === 'TODAY') {
+      // Se a propriedade `selectedProject` for igual a 'TODAY'
+      tasksQuery = query<tasksType>(
+        tasksCollectionRef,
+        where('userId', '==', 'wTJzDkRGVShfYX9L'),
+        where('date', '==', moment().format('DD/MM/YYYY')),
       );
-
-      setTasks(
-        selectedProject === 'NEXT_7'
-          ? filteredTasks.filter(
-              task =>
-                moment(task.date, 'DD-MM-YYYY').diff(moment(), 'days') <= 7,
-            )
-          : filteredTasks,
+    } else if (selectedProject === 'INBOX' || selectedProject === 0) {
+      // Se a propriedade `selectedProject` for igual a 'INBOX' ou igual a 0
+      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas do usuário que ainda não têm data
+        tasksCollectionRef,
+        where('userId', '==', 'wTJzDkRGVShfYX9L'),
+        where('date', '==', ''),
       );
-      setArchivedTasks(filteredArchivedTasks);
-    };
+    }
 
-    //Por fim, a função fetchTask é executada sempre que selectedProject é atualizado. Isso permite que a lista de tarefas seja atualizada sempre que um novo projeto é selecionado.
+    const unsubscribe = onSnapshot<tasksType>(
+      tasksQuery,
+      (snapshot: QuerySnapshot<tasksType>) => {
+        const newTasks = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-    fetchTask();
+        const filteredTasks = newTasks.filter(task => task.archived !== true);
+        const filteredArchivedTasks = newTasks.filter(
+          task => task.archived !== false,
+        );
+        setTasks(
+          selectedProject === 'NEXT_7'
+            ? filteredTasks.filter(
+                task =>
+                  moment(task.date, 'DD-MM-YYYY').diff(moment(), 'days') <= 7,
+              )
+            : filteredTasks,
+        );
+        setArchivedTasks(filteredArchivedTasks);
+      },
+    );
+
+    //Por fim, a função de limpeza retornada pelo useEffect chama o unsubscribe para cancelar o registro do listener quando o componente for desmontado.
+    return () => unsubscribe();
   }, [selectedProject]);
 
   return { tasks, archivedTasks };
 };
 
-const useProjects = async () => {
+const useProjects = () => {
   const [projects, setProjects] = useState<tasksType[]>([]);
 
   useEffect(() => {
-    // Cria uma referência para a coleção 'tasks' no Firebase
     const tasksCollectionRef: CollectionReference<tasksType> = collection(
       db,
       'tasks',
@@ -117,21 +117,21 @@ const useProjects = async () => {
       orderBy('projectId'),
     );
 
-    const fetchProjects = async () => {
-      const projectData = await getDocs<tasksType>(projectQuery);
+    onSnapshot<tasksType>(
+      projectQuery,
+      (snapshot: QuerySnapshot<tasksType>) => {
+        const allProjects = snapshot.docs.map(project => ({
+          ...project.data(),
+          docId: project.id,
+        }));
 
-      const allProjects = projectData.docs.map(project => ({
-        ...project.data(),
-        docId: project.id,
-      }));
-
-      if (JSON.stringify(allProjects) !== JSON.stringify(projects)) {
-        setProjects(allProjects);
-      }
-    };
-
-    fetchProjects();
+        if (JSON.stringify(allProjects) !== JSON.stringify(projects)) {
+          setProjects(allProjects);
+        }
+      },
+    );
   }, [projects]);
+
   return { projects };
 };
 
