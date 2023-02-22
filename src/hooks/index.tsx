@@ -28,6 +28,13 @@ type tasksType = {
   userId: string;
 };
 
+// Define o tipo de dados que a coleção 'projects' armazena.
+type projectsType = {
+  name: string;
+  projectId: string;
+  userId: string;
+}
+
 // Essa função verifica se existe uma coleção de tarefas (tasks) agrupadas por projeto
 
 const useTasks = (selectedProject: string | number) => {
@@ -42,15 +49,15 @@ const useTasks = (selectedProject: string | number) => {
       'tasks',
     ) as CollectionReference<tasksType>;
 
-    // Cria uma query para buscar todas as tarefas do usuário.
+    // Cria uma query para buscar todas as tarefas(tasks) do usuário.
     let tasksQuery = query<tasksType>(
       tasksCollectionRef,
       where('userid', '==', 'wTJzDkRGVShfYX9L'),
     );
 
     if (selectedProject && !collatedTasksExist(selectedProject)) {
-      // Se a propriedade `selectedProject` for verdadeira e não existir uma coleção de tarefas agrupadas por projeto
-      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas do usuário que pertencem ao projeto selecionado
+      // Se a propriedade `selectedProject` for verdadeira e não existir uma coleção de tarefas(tasks) agrupadas por projeto
+      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas(tasks) do usuário que pertencem ao projeto selecionado
         tasksCollectionRef,
         where('userId', '==', 'wTJzDkRGVShfYX9L'),
         where('projectId', '==', selectedProject),
@@ -64,13 +71,14 @@ const useTasks = (selectedProject: string | number) => {
       );
     } else if (selectedProject === 'INBOX' || selectedProject === 0) {
       // Se a propriedade `selectedProject` for igual a 'INBOX' ou igual a 0
-      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas do usuário que ainda não têm data
+      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas(tasks) do usuário que ainda não têm data
         tasksCollectionRef,
         where('userId', '==', 'wTJzDkRGVShfYX9L'),
         where('date', '==', ''),
       );
     }
 
+    // Usa a função onSnapshot para obter uma atualização em tempo real da tasksQuery
     const unsubscribe = onSnapshot<tasksType>(
       tasksQuery,
       (snapshot: QuerySnapshot<tasksType>) => {
@@ -79,10 +87,12 @@ const useTasks = (selectedProject: string | number) => {
           ...doc.data(),
         }));
 
+        // Filtro paras tarefas(tasks) não arquivadas e armazenadas em filteredTasks e as tarefas arquivadas (archivedTasks) armazenadas em filteredArchivedTasks.
         const filteredTasks = newTasks.filter(task => task.archived !== true);
         const filteredArchivedTasks = newTasks.filter(
           task => task.archived !== false,
         );
+        // As tarefas(tasks) filtradas vão para setTasks, com uma condição que se a tarefa (task) pertence ao projeto selecionado e que estão atrasadas há menos de 7 dias. 
         setTasks(
           selectedProject === 'NEXT_7'
             ? filteredTasks.filter(
@@ -91,48 +101,62 @@ const useTasks = (selectedProject: string | number) => {
               )
             : filteredTasks,
         );
+        // O estado das tarefas arquivadas (archivedTasks) é atualizado com setArchivedTasks.
         setArchivedTasks(filteredArchivedTasks);
       },
     );
 
-    //Por fim, a função de limpeza retornada pelo useEffect chama o unsubscribe para cancelar o registro do listener quando o componente for desmontado.
+    // Retorna o unsubscribe, a fim de cancelar a atualização em tempo real quando o componente que usa o hook é desmontado ou atualizado.
     return () => unsubscribe();
   }, [selectedProject]);
 
+  //  Retorna os objetos com os dados das tasks e tasks arquivados.
   return { tasks, archivedTasks };
 };
 
+// Hook que retorna uma lista de projetos e uma função para atualizá-la
 const useProjects = () => {
-  const [projects, setProjects] = useState<tasksType[]>([]);
+  // Estado inicial dos projetos como um array vazio
+  const [projects, setProjects] = useState<projectsType[]>([]);
 
   useEffect(() => {
-    const tasksCollectionRef: CollectionReference<tasksType> = collection(
+    // Cria uma referência para a coleção 'projects' no Firebase
+    const projectsCollectionRef: CollectionReference<projectsType> = collection(
       db,
-      'tasks',
-    ) as CollectionReference<tasksType>;
+      'projects',
+    ) as CollectionReference<projectsType>;
 
-    const projectQuery = query<tasksType>(
-      tasksCollectionRef,
+    // Cria uma query para filtrar os projetos por usuário e ordená-los por ID
+    const projectQuery = query<projectsType>(
+      projectsCollectionRef,
       where('userId', '==', 'wTJzDkRGVShfYX9L'),
       orderBy('projectId'),
     );
 
-    onSnapshot<tasksType>(
-      projectQuery,
-      (snapshot: QuerySnapshot<tasksType>) => {
-        const allProjects = snapshot.docs.map(project => ({
-          ...project.data(),
-          docId: project.id,
-        }));
+    // Define uma função assíncrona fetchProjects para buscar os projetos
+    const fetchProjects = async ()=>{
+      // Executa a query para buscar os projetos
+      const projectData = await getDocs<projectsType>(projectQuery);
 
-        if (JSON.stringify(allProjects) !== JSON.stringify(projects)) {
-          setProjects(allProjects);
-        }
-      },
-    );
-  }, [projects]);
+      // Transforma os dados dos projetos para um objeto com os dados e o ID do documento
+      const allProjects = projectData.docs.map(project => ({
+        ...project.data(),
+        docId: project.id,
+      }));
 
+      // Verifica se houve mudança nos projetos e atualiza o estado se necessário
+      if (JSON.stringify(allProjects) !== JSON.stringify(projects)){
+        setProjects(allProjects);
+      }
+    }
+
+    //Chama a função fetchProjects para buscar os projetos
+    fetchProjects();
+  }, [projects]); // Define a dependência do efeito como o estado de projeto
+
+  // Retorna um objeto com os projetos e a função para atualizá-los
   return { projects };
 };
 
+// Exportando os Hooks.
 export { useTasks, useProjects };
