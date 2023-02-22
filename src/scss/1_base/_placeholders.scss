@@ -1,0 +1,32 @@
+@use './variables';
+
+%box-overlay {
+  box-shadow: variables.$generic-box-shadows;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  top: 85px;
+  border-radius: 3px;
+}
+
+%cancel {
+  color: #555;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 2px 5px;
+}
+
+%task-item {
+  list-style-type: none;
+  display: flex;
+  line-height: 18px;
+  color: #333;
+  padding: 10px 0 10px 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}

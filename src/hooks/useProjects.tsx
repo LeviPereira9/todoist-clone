@@ -12,11 +12,7 @@ import {
 } from 'firebase/firestore';
 
 // Define o tipo de dados que a coleção 'projects' armazena.
-type projectsType = {
-  name: string;
-  projectId: string;
-  userId: string;
-};
+import { projectsType } from '../types/myType';
 
 const useProjects = () => {
   // Estado inicial dos projetos como um array vazio

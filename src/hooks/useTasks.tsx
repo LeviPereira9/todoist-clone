@@ -18,18 +18,13 @@ import moment from 'moment';
 import { collatedTasksExist } from '../helpers/collated_tasks';
 
 // Define o tipo de dados que a coleção 'tasks' armazena.
-type tasksType = {
-  archived: boolean;
-  date: string;
-  projectId: string;
-  task: string;
-  userId: string;
-};
+import { tasksType } from '../types/myType';
 
 
 // Essa função verifica se existe uma coleção de tarefas (tasks) agrupadas por projeto
 
 const useTasks = (selectedProject: string) => {
+
   const [tasks, setTasks] = useState<tasksType[]>([]);
   const [archivedTasks, setArchivedTasks] = useState<tasksType[]>([]);
 
@@ -44,7 +39,7 @@ const useTasks = (selectedProject: string) => {
     // Cria uma query para buscar todas as tarefas(tasks) do usuário.
     let tasksQuery = query<tasksType>(
       tasksCollectionRef,
-      where('userid', '==', 'wTJzDkRGVShfYX9L'),
+      where('userId', '==', 'wTJzDkRGVShfYX9L'),
     );
 
     if (selectedProject && !collatedTasksExist(selectedProject)) {
