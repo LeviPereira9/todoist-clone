@@ -11,8 +11,8 @@ const Header = (props: Props) => {
         </div>
         <div className="settings">
           <ul>
-            <li>+</li>
-            <li>
+            <li className='settings__add' data-testid="quick-add-task-action" role="button">+</li>
+            <li className='settings__darkmode' data-testid="dark-mode-action" role="button">
               <FaPizzaSlice />
             </li>
           </ul>
