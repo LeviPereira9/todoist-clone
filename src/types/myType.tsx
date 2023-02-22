@@ -1,9 +1,14 @@
-type projectsType = {
+type Projects = {
   id?:string;
   name: string;
   projectId: string;
   userId: string;
 };
+
+type ProjectsType = {
+  projects: Projects[];
+  setProjects?: React.Dispatch<React.SetStateAction<Projects[]>>;
+}
 
 type tasksType = {
   id?:string;
@@ -14,4 +19,4 @@ type tasksType = {
   userId: string;
 };
 
-export type { tasksType, projectsType };
+export type { tasksType, Projects, ProjectsType };

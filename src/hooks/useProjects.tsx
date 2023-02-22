@@ -12,21 +12,21 @@ import {
 } from 'firebase/firestore';
 
 // Define o tipo de dados que a coleção 'projects' armazena.
-import { projectsType } from '../types/myType';
+import { Projects, ProjectsType } from '../types/myType';
 
 const useProjects = () => {
   // Estado inicial dos projetos como um array vazio
-  const [projects, setProjects] = useState<projectsType[]>([]);
+  const [projects, setProjects] = useState<Projects[]>([]);
 
   useEffect(() => {
     // Cria uma referência para a coleção 'projects' no Firebase
-    const projectsCollectionRef: CollectionReference<projectsType> = collection(
+    const projectsCollectionRef: CollectionReference<Projects> = collection(
       db,
       'projects',
-    ) as CollectionReference<projectsType>;
+    ) as CollectionReference<Projects>;
 
     // Cria uma query para filtrar os projetos por usuário e ordená-los por ID
-    const projectQuery = query<projectsType>(
+    const projectQuery = query<Projects>(
       projectsCollectionRef,
       where('userId', '==', 'wTJzDkRGVShfYX9L'),
       orderBy('projectId'),
@@ -35,7 +35,7 @@ const useProjects = () => {
     // Define uma função assíncrona fetchProjects para buscar os projetos
     const fetchProjects = async () => {
       // Executa a query para buscar os projetos
-      const projectData = await getDocs<projectsType>(projectQuery);
+      const projectData = await getDocs<Projects>(projectQuery);
 
       // Transforma os dados dos projetos para um objeto com os dados e o ID do documento
       const allProjects = projectData.docs.map(project => ({
@@ -54,7 +54,7 @@ const useProjects = () => {
   }, [projects]); // Define a dependência do efeito como o estado de projeto
 
   // Retorna um objeto com os projetos e a função para atualizá-los
-  return { projects };
+  return { projects, setProjects };
 };
 
 export { useProjects };

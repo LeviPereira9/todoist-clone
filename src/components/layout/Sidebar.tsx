@@ -10,25 +10,25 @@ type Props = {};
 
 const Sidebar = (props: Props) => {
   return (
-    <div className="sideBar" data-testid="sidebar">
-      <ul className="sideBar__generic">
-        <li>
+    <div className="sidebar" data-testid="sidebar">
+      <ul className="sidebar__generic">
+        <li  className="inbox" data-testid="inbox">
           <FaInbox /> <span>Inbox</span>
         </li>
-        <li>
+        <li className="today" data-testid="today">
           <FaRegCalendar /> <span>Today</span>
         </li>
-        <li>
+        <li className="next_7" data-testid="next_7">
           <FaRegCalendarAlt /> <span>Next 7 days</span>
         </li>
       </ul>
-      <div className="sideBar__middle">
+      <div className="sidebar__middle">
         <span>
           <FaChevronDown />
         </span>
         <h2>Projects</h2>
       </div>
-      <ul className="sideBar__projects">Projects will be here!</ul>
+      <ul className="sidebar__projects">Projects will be here!</ul>
       Add Project Component Here!!
     </div>
   );
