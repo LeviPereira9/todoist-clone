@@ -37,7 +37,7 @@ type projectsType = {
 
 // Essa função verifica se existe uma coleção de tarefas (tasks) agrupadas por projeto
 
-const useTasks = (selectedProject: string | number) => {
+const useTasks = (selectedProject: string) => {
   const [tasks, setTasks] = useState<tasksType[]>([]);
   const [archivedTasks, setArchivedTasks] = useState<tasksType[]>([]);
 
@@ -57,19 +57,19 @@ const useTasks = (selectedProject: string | number) => {
 
     if (selectedProject && !collatedTasksExist(selectedProject)) {
       // Se a propriedade `selectedProject` for verdadeira e não existir uma coleção de tarefas(tasks) agrupadas por projeto
-      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas(tasks) do usuário que pertencem ao projeto selecionado
+      tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas(tasks) do usuário pelo projectId que corresponda ao selectProject.
         tasksCollectionRef,
         where('userId', '==', 'wTJzDkRGVShfYX9L'),
         where('projectId', '==', selectedProject),
       );
     } else if (selectedProject === 'TODAY') {
       // Se a propriedade `selectedProject` for igual a 'TODAY'
-      tasksQuery = query<tasksType>(
+      tasksQuery = query<tasksType>(// Query pela data de hoje.
         tasksCollectionRef,
         where('userId', '==', 'wTJzDkRGVShfYX9L'),
         where('date', '==', moment().format('DD/MM/YYYY')),
       );
-    } else if (selectedProject === 'INBOX' || selectedProject === 0) {
+    } else if (selectedProject === 'INBOX' || selectedProject === '0') {
       // Se a propriedade `selectedProject` for igual a 'INBOX' ou igual a 0
       tasksQuery = query<tasksType>( // Cria uma query para buscar todas as tarefas(tasks) do usuário que ainda não têm data
         tasksCollectionRef,
@@ -92,7 +92,7 @@ const useTasks = (selectedProject: string | number) => {
         const filteredArchivedTasks = newTasks.filter(
           task => task.archived !== false,
         );
-        // As tarefas(tasks) filtradas vão para setTasks, com uma condição que se a tarefa (task) pertence ao projeto selecionado e que estão atrasadas há menos de 7 dias. 
+        // As tarefas(tasks) filtradas vão para setTasks, com uma condição que se a tarefa (task) pertence ao projeto selecionado (selectedProject) e que estão atrasadas há menos de 7 dias. 
         setTasks(
           selectedProject === 'NEXT_7'
             ? filteredTasks.filter(
