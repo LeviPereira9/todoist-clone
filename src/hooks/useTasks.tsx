@@ -7,8 +7,6 @@ import {
   CollectionReference,
   query,
   where,
-  getDocs,
-  orderBy,
   onSnapshot,
   QuerySnapshot,
 } from 'firebase/firestore';
@@ -17,7 +15,7 @@ import {
 import moment from 'moment';
 
 //Verificador de projetos
-import { collatedTasksExist } from '../helpers';
+import { collatedTasksExist } from '../helpers/collated_tasks';
 
 // Define o tipo de dados que a coleção 'tasks' armazena.
 type tasksType = {
@@ -28,12 +26,6 @@ type tasksType = {
   userId: string;
 };
 
-// Define o tipo de dados que a coleção 'projects' armazena.
-type projectsType = {
-  name: string;
-  projectId: string;
-  userId: string;
-}
 
 // Essa função verifica se existe uma coleção de tarefas (tasks) agrupadas por projeto
 
@@ -114,49 +106,4 @@ const useTasks = (selectedProject: string) => {
   return { tasks, archivedTasks };
 };
 
-// Hook que retorna uma lista de projetos e uma função para atualizá-la
-const useProjects = () => {
-  // Estado inicial dos projetos como um array vazio
-  const [projects, setProjects] = useState<projectsType[]>([]);
-
-  useEffect(() => {
-    // Cria uma referência para a coleção 'projects' no Firebase
-    const projectsCollectionRef: CollectionReference<projectsType> = collection(
-      db,
-      'projects',
-    ) as CollectionReference<projectsType>;
-
-    // Cria uma query para filtrar os projetos por usuário e ordená-los por ID
-    const projectQuery = query<projectsType>(
-      projectsCollectionRef,
-      where('userId', '==', 'wTJzDkRGVShfYX9L'),
-      orderBy('projectId'),
-    );
-
-    // Define uma função assíncrona fetchProjects para buscar os projetos
-    const fetchProjects = async ()=>{
-      // Executa a query para buscar os projetos
-      const projectData = await getDocs<projectsType>(projectQuery);
-
-      // Transforma os dados dos projetos para um objeto com os dados e o ID do documento
-      const allProjects = projectData.docs.map(project => ({
-        ...project.data(),
-        docId: project.id,
-      }));
-
-      // Verifica se houve mudança nos projetos e atualiza o estado se necessário
-      if (JSON.stringify(allProjects) !== JSON.stringify(projects)){
-        setProjects(allProjects);
-      }
-    }
-
-    //Chama a função fetchProjects para buscar os projetos
-    fetchProjects();
-  }, [projects]); // Define a dependência do efeito como o estado de projeto
-
-  // Retorna um objeto com os projetos e a função para atualizá-los
-  return { projects };
-};
-
-// Exportando os Hooks.
-export { useTasks, useProjects };
+export { useTasks }
