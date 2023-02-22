@@ -5,7 +5,7 @@ type Projects = {
   userId: string;
 };
 
-type ProjectsType = {
+type ProjectsArr = {
   projects: Projects[];
   setProjects?: React.Dispatch<React.SetStateAction<Projects[]>>;
 }
@@ -19,4 +19,4 @@ type tasksType = {
   userId: string;
 };
 
-export type { tasksType, Projects, ProjectsType };
+export type { tasksType, Projects, ProjectsArr };
