@@ -1,18 +1,16 @@
 // Context Setup
-import { createContext, useContext, ReactNode } from 'react'
+import { createContext, useContext } from 'react'
 
 // Projects Hook
 import { useProjects } from '../hooks/useProjects'
 
-import { Projects, ProjectsArr } from '../types/myType';
+import { ProjectsArr, ContextProviderProps } from '../types/myType';
 
-type ProjectsContextProviderProps = {
-    children: ReactNode;
-  };
+
 
 export const ProjectsContext = createContext<ProjectsArr>({} as ProjectsArr);
 
-export const ProjectsContextProvider = ({children} : ProjectsContextProviderProps) => {
+export const ProjectsContextProvider = ({children} : ContextProviderProps) => {
 
     const {projects, setProjects }  = useProjects();
     

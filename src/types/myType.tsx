@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 type Projects = {
   id?:string;
   name: string;
@@ -19,4 +21,8 @@ type tasksType = {
   userId: string;
 };
 
-export type { tasksType, Projects, ProjectsArr };
+type ContextProviderProps = {
+  children: ReactNode;
+};
+
+export type { tasksType, Projects, ProjectsArr, ContextProviderProps };
