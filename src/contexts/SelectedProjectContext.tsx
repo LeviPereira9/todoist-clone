@@ -2,9 +2,9 @@
 import { createContext, useContext, useState } from 'react';
 
 //Types
-import { ContextProviderProps, SelectedProjects } from '../types/myType';
+import { ContextProviderProps, SelectedProjectsState } from '../types/myType';
 
-export const SelectedProjectContext = createContext<SelectedProjects>({} as SelectedProjects);
+export const SelectedProjectContext = createContext<SelectedProjectsState>({} as SelectedProjectsState);
 
 export const SelectedProjectContextProvider = ({children}: ContextProviderProps) => {
 

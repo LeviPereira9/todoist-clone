@@ -12,7 +12,7 @@ type ProjectsState = {
   setProjects?: React.Dispatch<React.SetStateAction<Projects[]>>;
 }
 
-type SelectedProjects = {
+type SelectedProjectsState = {
   selectedProject: string;
   setSelectedProject?: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -30,4 +30,4 @@ type ContextProviderProps = {
   children: ReactNode;
 };
 
-export type { tasksType, Projects, ProjectsState, ContextProviderProps, SelectedProjects };
+export type { tasksType, Projects, ProjectsState, ContextProviderProps, SelectedProjectsState };
