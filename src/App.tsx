@@ -10,24 +10,28 @@ import Header from './components/layout/Header';
 import Sidebar from './components/layout/Sidebar';
 import Tasks from './components/layout/Tasks';
 
-//Context
-import { ProjectsContext, ProjectsContextProvider, useProjectsValue } from './contexts/ProjectsContext';
+// Contexts Providers
+import { SelectedProjectContextProvider } from './contexts/SelectedProjectContext';
+import { ProjectsContextProvider } from './contexts/ProjectsContext';
+
+// Contexts Hooks
 
 function App() {
-
-  
-  
   return (
     <div>
       <BrowserRouter>
-        <Header />
-        <div className="container">
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={<Content />}></Route>
-            <Route path="/tasks" element={<Tasks/>}></Route>
-          </Routes>
-        </div>
+        <SelectedProjectContextProvider>
+          <ProjectsContextProvider>
+            <Header />
+            <div className="container">
+              <Sidebar />
+              <Routes>
+                <Route path="/" element={<Content />}></Route>
+                <Route path="/tasks" element={<Tasks />}></Route>
+              </Routes>
+            </div>
+          </ProjectsContextProvider>
+        </SelectedProjectContextProvider>
       </BrowserRouter>
     </div>
   );

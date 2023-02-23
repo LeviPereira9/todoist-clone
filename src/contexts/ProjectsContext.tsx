@@ -17,5 +17,3 @@ export const ProjectsContextProvider = ({ children }: ContextProviderProps) => {
     </ProjectsContext.Provider>
   );
 };
-
-export const useProjectsValue = () => useContext(ProjectsContext);
