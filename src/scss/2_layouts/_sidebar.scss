@@ -28,6 +28,11 @@
     padding: 5px 0;
     cursor: pointer;
 
+    &:hover {
+      font-weight: bold;
+      background-color: white;
+    }
+
     &-delete {
       margin-left: auto;
       display: none;
@@ -118,8 +123,14 @@
       line-height: 1.5;
       font-size: 15px;
 
+      &.active,
+      &:hover {
+        font-weight: bold;
+        background-color: white;
+      }
+
       span:first-of-type {
-        margin-right: 10px;
+        margin: 0 15px;
 
         svg {
           width: 18px;
@@ -127,12 +138,6 @@
           color: #555;
         }
       }
-    }
-
-    &.active,
-    &:hover {
-      font-weight: bold;
-      background-color: white;
     }
   }
 }
