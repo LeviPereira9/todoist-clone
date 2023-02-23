@@ -12,7 +12,7 @@ const Sidebar = (props: Props) => {
   return (
     <div className="sidebar" data-testid="sidebar">
       <ul className="sidebar__generic">
-        <li  className="inbox" data-testid="inbox">
+        <li className="inbox" data-testid="inbox">
           <FaInbox /> <span>Inbox</span>
         </li>
         <li className="today" data-testid="today">
