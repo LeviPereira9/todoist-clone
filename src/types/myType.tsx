@@ -12,6 +12,11 @@ type ProjectsArr = {
   setProjects?: React.Dispatch<React.SetStateAction<Projects[]>>;
 }
 
+type SelectedProjects = {
+  selectedProject: string;
+  setSelectedProject?: React.Dispatch<React.SetStateAction<string>>;
+}
+
 type tasksType = {
   id?:string;
   archived: boolean;
@@ -25,4 +30,4 @@ type ContextProviderProps = {
   children: ReactNode;
 };
 
-export type { tasksType, Projects, ProjectsArr, ContextProviderProps };
+export type { tasksType, Projects, ProjectsArr, ContextProviderProps, SelectedProjects };

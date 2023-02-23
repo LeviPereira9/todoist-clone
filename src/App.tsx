@@ -10,7 +10,13 @@ import Header from './components/layout/Header';
 import Sidebar from './components/layout/Sidebar';
 import Tasks from './components/layout/Tasks';
 
+//Context
+import { ProjectsContext, ProjectsContextProvider, useProjectsValue } from './contexts/ProjectsContext';
+
 function App() {
+
+  
+  
   return (
     <div>
       <BrowserRouter>
