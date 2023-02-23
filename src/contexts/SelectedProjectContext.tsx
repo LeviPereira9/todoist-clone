@@ -1,5 +1,5 @@
 // Context Setup
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 //Types
 import { ContextProviderProps, SelectedProjectsState } from '../types/myType';
@@ -17,5 +17,3 @@ export const SelectedProjectContextProvider = ({children}: ContextProviderProps)
     )
     
 }
-
-export const useSelectedProjectValue = () => useContext(SelectedProjectContext);
