@@ -74,12 +74,47 @@
 
       svg {
         color: #cacaca;
+
+        &:hover {
+          color: black;
+        }
       }
 
       &.active,
       &:hover {
         font-weight: bold;
         background-color: white;
+      }
+
+      .project-delete-modal {
+        position: relative;
+
+        &__inner {
+          @extend %box-overlay;
+
+          z-index: 99;
+          width: 200px;
+          padding: 10px;
+          top: 10px;
+          right: 0;
+          background-color: white;
+
+          p {
+            margin: 5px 0;
+            line-height: normal;
+            font-weight: normal;
+            font-size: 15px;
+          }
+
+          button {
+            @include btn(50px);
+          }
+
+          span {
+            @extend %cancel;
+            font-weight: normal;
+          }
+        }
       }
     }
 
