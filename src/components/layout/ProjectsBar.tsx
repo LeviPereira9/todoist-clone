@@ -6,15 +6,17 @@ import {
   useProjectsValue,
   useSelectedProjectValue,
 } from '../../hooks/useContexts';
+import IndividualProject from '../IndividualProject';
 
 
-const Projects = ({ activeValue = null }) => {
+const ProjectsBar = ({ activeValue = null }) => {
   const [active, setActive] = useState<string|null>(activeValue);
-  const { selectedProject } = useSelectedProjectValue();
+  const { setSelectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
 
   console.log(projects);
 
+  
   return (
     <>
       {projects &&
@@ -27,12 +29,12 @@ const Projects = ({ activeValue = null }) => {
             role="button"
             onClick={()=>{
                 setActive(project.projectId);
-                //selectedProject(project.projectId);
+                setSelectedProject && setSelectedProject(project.projectId);
             }}
-          >{JSON.stringify(projects)}</li>
+          ><IndividualProject project={project} /></li>
         ))}
     </>
   );
 };
 
-export default Projects;
+export default ProjectsBar;

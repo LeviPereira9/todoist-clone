@@ -11,7 +11,8 @@ import {
 
 //Context Hooks
 import { useSelectedProjectValue } from "../../hooks/useContexts";
-import Projects from "./Projects";
+import AddProject from "../AddProject";
+import ProjectsBar from "./ProjectsBar";
 
 type Props = {};
 
@@ -41,8 +42,8 @@ const Sidebar = (props: Props) => {
         </span>
         <h2>Projects</h2>
       </div>
-      <ul className="sidebar__projects">{showProjects && <Projects/>}</ul>
-      { showProjects && <Projects/>}
+      <ul className="sidebar__projects">{showProjects && <ProjectsBar/>}</ul>
+      { showProjects && <AddProject/>}
     </div>
   );
 };

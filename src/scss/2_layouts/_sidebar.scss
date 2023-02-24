@@ -27,10 +27,45 @@
   &__project {
     padding: 5px 0;
     cursor: pointer;
+    list-style-type: none;
+    display: flex;
+    justify-content: start;
+    align-items: center;
 
     &:hover {
       font-weight: bold;
       background-color: white;
+    }
+
+    .sidebar__dot {
+      margin-right: 6px;
+      font-size: 30px;
+    }
+
+    &:nth-child(1) {
+      .sidebar__dot {
+        color: #6accbc;
+      }
+    }
+    &:nth-child(2) {
+      .sidebar__dot {
+        color: #fad003;
+      }
+    }
+    &:nth-child(3) {
+      .sidebar__dot {
+        color: #ff8d85;
+      }
+    }
+    &:nth-child(4) {
+      .sidebar__dot {
+        color: #ff9932;
+      }
+    }
+    &:nth-child(5) {
+      .sidebar__dot {
+        color: #af38eb;
+      }
     }
 
     &-delete {
@@ -46,32 +81,6 @@
         font-weight: bold;
         background-color: white;
       }
-
-      &:nth-child(1) {
-        .sidebar__dot {
-          color: #6accbc;
-        }
-      }
-      &:nth-child(2) {
-        .sidebar__dot {
-          color: #fad003;
-        }
-      }
-      &:nth-child(3) {
-        .sidebar__dot {
-          color: #ff8d85;
-        }
-      }
-      &:nth-child(4) {
-        .sidebar__dot {
-          color: #ff9932;
-        }
-      }
-      &:nth-child(5) {
-        .sidebar__dot {
-          color: #af38eb;
-        }
-      }
     }
 
     &__projects {
@@ -86,30 +95,30 @@
       margin-right: 10px;
       font-size: 30px;
     }
+  }
 
-    &__middle {
-      margin: 20px 0;
-      display: flex;
-      border-bottom: variables.$generic-border;
-      padding-left: 10px;
-      cursor: pointer;
+  &__middle {
+    margin: 20px 0;
+    display: flex;
+    border-bottom: variables.$generic-border;
+    padding-left: 10px;
+    cursor: pointer;
 
-      span {
-        color: black;
-        margin-right: 10px;
+    span {
+      color: black;
+      margin-right: 10px;
 
-        svg.hidden-projects {
-          transform: rotate(-90deg);
-        }
+      svg.hidden-projects {
+        transform: rotate(-90deg);
       }
+    }
 
-      h2 {
-        margin: 0;
-        color: #333;
-        font-size: 15px;
-        font-weight: bold;
-        padding-bottom: 20px;
-      }
+    h2 {
+      margin: 0;
+      color: #333;
+      font-size: 15px;
+      font-weight: bold;
+      padding-bottom: 20px;
     }
   }
 
