@@ -5,6 +5,7 @@ type Projects = {
   name: string;
   projectId: string;
   userId: string;
+  key?:string
 };
 
 type ProjectsState = {
@@ -26,6 +27,11 @@ type tasksType = {
   userId: string;
 };
 
+type CollatedTasks = {
+  key: string;
+  name:string;
+};
+
 type ContextProviderProps = {
   children: ReactNode;
 };
@@ -37,4 +43,5 @@ export type {
   ProjectsState,
   ContextProviderProps,
   SelectedProjectsState,
+  CollatedTasks
 };

@@ -1,31 +1,67 @@
+//React
+import { useEffect } from 'react';
+
 //Components
-import Checkbox from "../Checkbox";
+import Checkbox from '../Checkbox';
 
 //Types
-import { tasksType } from "../../types/myType";
 
 //Hooks
-import { useTasks } from "../../hooks/useTasks";
+import { useTasks } from '../../hooks/useTasks';
+
+//Custom Hooks
+import {
+  useSelectedProjectValue,
+  useProjectsValue,
+} from '../../hooks/useContexts';
+
+//Helpers
+import {
+  collatedTasksExist,
+  getCollatedTitle,
+  getTitle,
+} from '../../helpers/collated_tasks';
+
+//Consntas
+import { collatedTasks } from '../../constants/MY_CONSTANTS';
 
 const Tasks = () => {
-    const { tasks } = useTasks("1");
+  const { selectedProject } = useSelectedProjectValue();
+  const { projects } = useProjectsValue();
 
-    console.log(tasks);
-    
-    let projectName = '';
-    
-  return <div className="tasks" data-testid="tasks">
-    <h2 data-testid="project-name">{projectName}</h2>
+  const { tasks } = useTasks(selectedProject);
 
-    <ul className="tasks__list">
-        {tasks ? tasks.map(task=>(
-            <li key={`${task.id}`}>
-                <Checkbox id={task.id as string}/>
+  let projectName = '';
+
+  if (projects && selectedProject && !collatedTasksExist(selectedProject)) {
+    projectName = getTitle(projects, selectedProject);
+  }
+
+  if (selectedProject && collatedTasksExist(selectedProject)) {
+    projectName = getCollatedTitle(collatedTasks, selectedProject);
+  }
+
+  useEffect(() => {
+    document.title = `${projectName}: Todoist`;
+  }, [projectName]);
+
+  
+  return (
+    <div className="tasks" data-testid="tasks">
+      <h2 data-testid="project-name">{projectName}</h2>
+
+      <ul className="tasks__list">
+        {tasks
+          ? tasks.map(task => (
+              <li key={`${task.id}`}>
+                <Checkbox id={task.id as string} />
                 <span>{task.task}</span>
-            </li>
-        )) : false}
-    </ul>
-  </div>;
+              </li>
+            ))
+          : false}
+      </ul>
+    </div>
+  );
 };
 
 export default Tasks;

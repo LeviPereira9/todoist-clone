@@ -14,8 +14,6 @@ const ProjectsBar = ({ activeValue = null }) => {
   const { setSelectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
 
-  console.log(projects);
-
   
   return (
     <>
