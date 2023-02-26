@@ -23,8 +23,8 @@ function App() {
         <SelectedProjectContextProvider>
           <ProjectsContextProvider>
             <Header />
-            <Sidebar />
-            <div className="container">
+            <div className="content">
+              <Sidebar />
               <Routes>
                 <Route path="/" element={<Content />}></Route>
                 <Route path="/tasks" element={<Tasks />}></Route>
