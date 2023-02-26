@@ -1,0 +1,10 @@
+@use 'task';
+
+.content {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+  max-width: 922px;
+  margin: auto;
+  background-color: red;
+}

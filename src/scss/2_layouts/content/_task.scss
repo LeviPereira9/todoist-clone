@@ -1,0 +1,56 @@
+@use '../../1_base/variables';
+@import '../../1_base/mixins';
+
+.tasks {
+  width: 656px;
+  background-color: white;
+  margin-left: 266px;
+  border-right: variables.$generic-border;
+  min-height: calc(100vh);
+  vertical-align: top;
+  padding: 80px 40px 84px 40px;
+
+  @include mq(900px) {
+    margin-left: 0;
+    width: auto;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 30px 20px 0;
+  }
+
+  .add-task {
+    margin-top: 20px;
+  }
+
+  &__list li {
+    display: flex;
+    line-height: 18px;
+    color: #333;
+    padding: 10px 0;
+    font-size: 14px;
+    list-style-type: none;
+    border-bottom: 1px solid #f0f0f0;
+
+    .checkbox-holder {
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 16px;
+
+      .checkbox {
+        cursor: pointer;
+        border-color: gray;
+        color: #343434;
+        height: 16px;
+        width: 16px;
+        display: block;
+        border: 1px solid gray;
+        border-radius: 16px;
+      }
+    }
+  }
+}
