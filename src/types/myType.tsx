@@ -27,6 +27,13 @@ type tasksType = {
   userId: string;
 };
 
+type AddTaskProps = {
+  showAddTaskMain?: boolean;
+  showShouldMain?: boolean;
+  showQuickAddTask?: boolean;
+  setShowQuickAddTask: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 type CollatedTasks = {
   key: string;
   name:string;
@@ -39,6 +46,7 @@ type ContextProviderProps = {
 
 export type {
   tasksType,
+  AddTaskProps,
   Projects,
   ProjectsState,
   ContextProviderProps,

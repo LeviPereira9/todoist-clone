@@ -1,4 +1,92 @@
+@use '../../1_base/placeholders';
+@import '../../1_base/mixins';
+
 .add-task {
+  &__overlay {
+    background: rgba(102, 102, 102, 0.5);
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20000;
+    transition: opacity 0.2s ease-in;
+    height: calc(100vh);
+
+    .add-task__main {
+      overflow: visible;
+      margin-bottom: 20px;
+      margin-top: 55px;
+      border-radius: 5px;
+      background-color: white;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      padding: 20px 30px;
+      transform: translate(-50%, -50%);
+
+      .header {
+        font-size: 13px;
+        margin-bottom: 20px;
+        float: left;
+      }
+    }
+
+    .add-task__cancel-x {
+      cursor: pointer;
+      color: gray;
+      float: right;
+      font-weight: bold;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+
+  &__main {
+    position: relative;
+  }
+
+  &__project,
+  &__date {
+    cursor: pointer;
+    float: right;
+    color: gray;
+    margin: 20px 10px;
+  }
+
+  &__project {
+    margin-right: 0;
+  }
+
+  &__content {
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: white !important;
+    border-radius: 3px;
+    height: 35px;
+    padding: 0 10px;
+  }
+
+  &__cancel,
+  &__submit {
+    @extend %no-select;
+  }
+
+  &__cancel {
+    @extend %cancel;
+  }
+
+  &__submit {
+    @include btn(90px);
+  }
+}
+
+.add-task__shallow,
+.add-project {
+  @extend %no-select;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .add-task__plus,
@@ -7,10 +95,42 @@
   font-size: 18px;
 }
 
-.add-task_-text,
+.add-task__text,
 .add-project__text {
   display: inline-block;
   color: #545454;
   font-size: 14px;
   margin-left: 15px;
+}
+
+//Task Date
+
+.task-date {
+  @extend %box-overlay;
+  background-color: #fff;
+  width: 200px;
+  right: 0;
+
+  &__list li {
+    @extend %task-item;
+
+    span:first-of-type {
+      margin-right: 10px;
+
+      svg {
+        color: black;
+      }
+    }
+  }
+}
+
+// Project Overlay
+
+.project-overlay {
+  @extend %box-overlay;
+  background-color: white;
+
+  &__list li {
+    @extend %task-item;
+  }
 }

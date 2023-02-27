@@ -1,5 +1,5 @@
 //React
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 //Components
 import Checkbox from '../Checkbox';
@@ -24,8 +24,12 @@ import {
 
 //Consntas
 import { collatedTasks } from '../../constants/MY_CONSTANTS';
+import AddTask from '../AddTask';
+import { setCommentRange } from 'typescript';
 
 const Tasks = () => {
+  const [showQuickAddTask, setShowQuickAddTask] = useState(false);
+  
   const { selectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
 
@@ -45,21 +49,21 @@ const Tasks = () => {
     document.title = `${projectName}: Todoist`;
   }, [projectName]);
 
-  
   return (
     <div className="tasks" data-testid="tasks">
       <h2 data-testid="project-name">{projectName}</h2>
 
       <ul className="tasks__list">
-        {tasks
-          ? tasks.map(task => (
-              <li key={`${task.id}`}>
-                <Checkbox id={task.id as string} />
-                <span>{task.task}</span>
-              </li>
-            ))
-          : false}
+        {tasks &&
+          tasks.map(task => (
+            <li key={`${task.id}`}>
+              <Checkbox id={task.id as string} />
+              <span>{task.task}</span>
+            </li>
+          ))}
       </ul>
+
+      <AddTask setShowQuickAddTask={setShowQuickAddTask}/>
     </div>
   );
 };
