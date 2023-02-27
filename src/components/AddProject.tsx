@@ -49,7 +49,7 @@ const AddProject = ({ shouldShow = false }) => {
         <div className="add-project__input">
           <input
             type="text"
-            className="add-rpoject__name"
+            className="add-project__name"
             data-testid="add-project-name"
             value={projectName}
             onChange={e => setProjectName(e.target.value)}
