@@ -1,48 +1,53 @@
 //Types
-import { CollatedTasks, Projects } from "../types/myType";
+import { CollatedTasks, Projects } from '../types/myType';
 
 //Constants
-import  { collatedTasks }  from "../constants/MY_CONSTANTS";
+import { collatedTasks } from '../constants/MY_CONSTANTS';
 
 const collatedTasksExist = (selectedProject: string) => {
   return !!collatedTasks.find(task => task.key === selectedProject);
-}
+};
 
-const getTitle = (projects: Projects[], projectId:string) => {
+const getTitle = (projects: Projects[], projectId: string) => {
   const project = projects.find(project => project.projectId === projectId);
-  return project ? project.name : "Project Not Found";
-}
+  return project ? project.name : 'Project Not Found';
+};
 
-const getCollatedTitle = (collatedTasks:CollatedTasks[], key: string) => {
-  const colletadTitle = collatedTasks.find(colletadTitle => colletadTitle.key === key);
-  return colletadTitle? colletadTitle.name : "Project Not Found";
-}
+const getCollatedTitle = (collatedTasks: CollatedTasks[], key: string) => {
+  const colletadTitle = collatedTasks.find(
+    colletadTitle => colletadTitle.key === key,
+  );
+  return colletadTitle ? colletadTitle.name : 'Project Not Found';
+};
 
+const generatePushId = (): (() => string) => {
+  const PUSH_CHARS =
+    '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
 
-const generatePushId = (() => {
-  const PUSH_CHARS = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
+  const generateRandomChars = (): string => {
+    const randomChars = new Array(12);
+    for (let i = 0; i < 12; i++) {
+      randomChars[i] = PUSH_CHARS.charAt(
+        Math.floor(Math.random() * PUSH_CHARS.length)
+      );
+    }
+    return randomChars.join('');
+  };
 
-  const lastRandChars:number[] = [];
-
-  return function() {
-
+  return (): string => {
     let now = new Date().getTime();
 
     const timeStampChars = new Array(8);
-    for (let c = 7; c >= 0; c++){
-      timeStampChars[c] = PUSH_CHARS.charAt(now % 64);
+    for (let i = 7; i >= 0; i--) {
+      timeStampChars[i] = PUSH_CHARS.charAt(now % 64);
       now = Math.floor(now / 64);
     }
-    
-    let id = timeStampChars.join('');
 
-    for(let c = 0; c < 12; c++){
-      id += PUSH_CHARS.charAt(lastRandChars[c]);
-    }
-    
+    const id = timeStampChars.join('') + generateRandomChars();
+
     return id;
   };
+};
 
-})
 
-export { collatedTasksExist, getTitle, getCollatedTitle }
+export { collatedTasksExist, getTitle, getCollatedTitle, generatePushId };
