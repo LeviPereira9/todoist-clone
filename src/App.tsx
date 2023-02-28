@@ -26,8 +26,8 @@ function App() {
             <div className="content">
               <Sidebar />
               <Routes>
-                <Route path="/" element={<Content />}></Route>
-                <Route path="/tasks" element={<Tasks />}></Route>
+                <Route path="/" element={<Tasks />}></Route>
+                <Route path="/tasks" element={<Content />}></Route>
               </Routes>
             </div>
           </ProjectsContextProvider>
