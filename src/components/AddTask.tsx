@@ -9,20 +9,15 @@ import moment from 'moment';
 
 //Firebase
 import { db, collection } from '../firebase';
-import {
-  CollectionReference,
-  query,
-  where,
-  onSnapshot,
-  QuerySnapshot,
-  addDoc,
-} from 'firebase/firestore';
+import { CollectionReference, addDoc } from 'firebase/firestore';
 
 //Context Hooks
 import { useSelectedProjectValue } from '../hooks/useContexts';
 
 //Types
 import { tasksType, AddTaskProps } from '../types/myType';
+import ProjectsOverlay from './ProjectsOverlay';
+import TaskDate from './TaskDate';
 
 const AddTask: React.FC<AddTaskProps> = ({
   showAddTaskMain = true,
@@ -110,8 +105,16 @@ const AddTask: React.FC<AddTaskProps> = ({
               </div>
             </>
           )}
-          <p>Project overlay here</p>
-          <p>TaskDate here</p>
+          <ProjectsOverlay
+            setProject={setProject}
+            showProjectOverlay={showProjectOverlay}
+            setShowProjectOverlay={setShowProjectOverlay}
+          />
+          <TaskDate
+            setTaskDate={setTaskDate}
+            showTaskDate={showTaskDate}
+            setShowTaskDate={setShowTaskDate}
+          />
           <input
             type="text"
             className="add-task__content"
