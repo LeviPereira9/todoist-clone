@@ -1,3 +1,6 @@
+//React
+import { useState } from 'react';
+
 // Routes
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -16,19 +19,25 @@ import { ProjectsContextProvider } from './contexts/ProjectsContext';
 
 // Contexts Hooks
 
-function App() {
+function App({ darkModeDefault = false }) {
+  const [darkMode, setDarkMode] = useState(darkModeDefault);
   return (
     <div>
       <BrowserRouter>
         <SelectedProjectContextProvider>
           <ProjectsContextProvider>
-            <Header />
-            <div className="content">
-              <Sidebar />
-              <Routes>
-                <Route path="/" element={<Tasks />}></Route>
-                <Route path="/tasks" element={<Content />}></Route>
-              </Routes>
+            <div
+              className={darkMode ? 'darkmode' : undefined}
+              data-testid="application"
+            >
+              <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+              <div className="content">
+                <Sidebar />
+                <Routes>
+                  <Route path="/" element={<Tasks />}></Route>
+                  <Route path="/tasks" element={<Content />}></Route>
+                </Routes>
+              </div>
             </div>
           </ProjectsContextProvider>
         </SelectedProjectContextProvider>

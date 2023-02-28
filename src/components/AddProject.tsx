@@ -20,7 +20,7 @@ const AddProject = ({ shouldShow = false }) => {
 
   const projectId = generatePushId();
 
-  const { setProjects } = useProjectsValue();
+  const { projects, setProjects } = useProjectsValue();
 
   const addProject = async () => {
     if (projectName) {
@@ -37,7 +37,7 @@ const AddProject = ({ shouldShow = false }) => {
 
       await addDoc(projectsCollectionRef, addBody);
 
-      setProjects && setProjects([]);
+      setProjects && setProjects([...projects]);
       setProjectName('');
       setShow(false);
     }

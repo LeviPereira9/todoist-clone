@@ -88,16 +88,15 @@ const AddTask: React.FC<AddTaskProps> = ({
         <div className="add-task__main" data-testid="add-task-main">
           {showQuickAddTask && (
             <>
-              <div data-testid="quick-add-task">
+              <div data-testid="quick-add-task add-task__quickContainer">
                 <h2 className="add-task__main-header">Quick Add Task</h2>
                 <span
                   className="add-task__cancel-x"
                   data-testid="add-task-quick-cancel"
                   onClick={() => {
-                    setShowMain(!showMain);
-                    setShowProjectOverlay(!showProjectOverlay);
-                    setShowQuickAddTask &&
-                      setShowQuickAddTask(!showQuickAddTask);
+                    setShowMain(false);
+                    setShowProjectOverlay(false);
+                    setShowQuickAddTask && setShowQuickAddTask(false);
                   }}
                 >
                   X
@@ -129,7 +128,12 @@ const AddTask: React.FC<AddTaskProps> = ({
             data-testid="add-task"
             type="button"
             onClick={() => {
-              addTask();
+              showQuickAddTask
+                ? (() => {
+                    addTask();
+                    setShowQuickAddTask(false);
+                  })()
+                : addTask();
             }}
           >
             Add Task
