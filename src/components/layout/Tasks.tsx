@@ -63,7 +63,7 @@ const Tasks = () => {
         {tasks &&
           tasks.map(task => (
             <li key={`${task.id}`}>
-              <Checkbox id={task.id as string} />
+              <Checkbox id={task.id as string} taskDesc={task.task} />
               <span aria-label="descrição da task">{task.task}</span>
             </li>
           ))}
