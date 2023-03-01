@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
 
 // Components
-import Content from './components/layout/Content';
 import Header from './components/layout/Header';
 import Sidebar from './components/layout/Sidebar';
 import Tasks from './components/layout/Tasks';
@@ -35,7 +34,6 @@ function App({ darkModeDefault = false }) {
                 <Sidebar />
                 <Routes>
                   <Route path="/" element={<Tasks />}></Route>
-                  <Route path="/tasks" element={<Content />}></Route>
                 </Routes>
               </div>
             </div>

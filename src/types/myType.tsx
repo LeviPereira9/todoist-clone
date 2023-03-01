@@ -43,6 +43,22 @@ type ContextProviderProps = {
   children: ReactNode;
 };
 
+type HeaderProps = {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+type ProjectsOverlayProps = {
+  setProject: React.Dispatch<React.SetStateAction<string>>;
+  showProjectOverlay: boolean;
+  setShowProjectOverlay: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+type TaskDateProps = {
+  setTaskDate: React.Dispatch<React.SetStateAction<string>>;
+  showTaskDate: boolean;
+  setShowTaskDate: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 export type {
   tasksType,
@@ -51,5 +67,8 @@ export type {
   ProjectsState,
   ContextProviderProps,
   SelectedProjectsState,
-  CollatedTasks
+  CollatedTasks,
+  HeaderProps,
+  ProjectsOverlayProps,
+  TaskDateProps
 };

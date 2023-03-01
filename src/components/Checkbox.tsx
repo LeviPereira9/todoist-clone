@@ -1,11 +1,12 @@
 //Firebase
 import { db, collection } from '../firebase';
-import { CollectionReference, query, doc, updateDoc } from 'firebase/firestore';
+import { CollectionReference, doc, updateDoc } from 'firebase/firestore';
 
 //types
 import { tasksType } from '../types/myType';
 
 const Checkbox = ({ id }: { id: string }) => {
+  //Atualização no FB, passa para arquivado(task concluida)
   const archiveTask = async () => {
     const tasksCollectionRef: CollectionReference<tasksType> = collection(
       db,
@@ -14,14 +15,18 @@ const Checkbox = ({ id }: { id: string }) => {
 
     const taskDocRef = doc(tasksCollectionRef, id);
 
-    const taskDoc = await updateDoc<tasksType>(taskDocRef, { archived: true });
+    await updateDoc<tasksType>(taskDocRef, { archived: true });
   };
 
   return (
     <div
       className="checkbox-holder"
       data-testid="checkbox-action"
+      role="button"
+      tabIndex={0}
+      aria-label="Marcar tarefa como concluida"
       onClick={() => archiveTask()}
+      //onKeyDown={()=>{...}}
     >
       <span className="checkbox"></span>
     </div>

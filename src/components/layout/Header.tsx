@@ -8,10 +8,8 @@ import { FaPizzaSlice } from 'react-icons/fa';
 //Components
 import AddTask from '../AddTask';
 
-type HeaderProps = {
-  darkMode: boolean;
-  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-};
+//Types
+import { HeaderProps } from '../../types/myType';
 
 const Header = ({ darkMode, setDarkMode }: HeaderProps) => {
   const [shouldShowMain, setShouldShowMain] = useState(false);
@@ -30,10 +28,13 @@ const Header = ({ darkMode, setDarkMode }: HeaderProps) => {
               className="settings__add"
               data-testid="quick-add-task-action"
               role="button"
+              tabIndex={0}
+              aria-label="Atalho para adicionar uma nova tarefa"
               onClick={()=>{
                 setShouldShowMain(!shouldShowMain);
                 setShowQuickAddTask(!showQuickAddTask);
               }}
+              //onKeyDown={()=>{...}}
             >
               +
             </li>
@@ -41,15 +42,19 @@ const Header = ({ darkMode, setDarkMode }: HeaderProps) => {
               className="settings__darkmode"
               data-testid="dark-mode-action"
               role="button"
+              tabIndex={0}
+              aria-label='Ativar/Desativar modo noturno'
               onClick={()=>{
                 setDarkMode(!darkMode);
               }}
+              //onKeyDown={()=>{...}}
             >
               <FaPizzaSlice />
             </li>
           </ul>
         </div>
       </nav>
+      {/* Container do atalho de adicionar tarefa. */}
       <AddTask
         showAddTaskMain={false}
         showShouldMain={shouldShowMain}

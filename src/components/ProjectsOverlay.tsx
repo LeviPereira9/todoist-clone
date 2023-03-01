@@ -1,11 +1,8 @@
 //Context Hooks
 import { useProjectsValue } from '../hooks/useContexts';
 
-type ProjectsOverlayProps = {
-  setProject: React.Dispatch<React.SetStateAction<string>>;
-  showProjectOverlay: boolean;
-  setShowProjectOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-};
+//Types
+import { ProjectsOverlayProps } from '../types/myType';
 
 const ProjectsOverlay = ({
   setProject,
@@ -23,10 +20,14 @@ const ProjectsOverlay = ({
               <li
                 key={project.projectId}
                 data-testid="project-overlay-action"
+                role="button"
+                tabIndex={0}
+                aria-label="Escolha o projeto a atribuir a task"
                 onClick={() => {
                   setProject(project.projectId);
                   setShowProjectOverlay(false);
                 }}
+                //onKeyDown={()=>{...}}
               >
                 {project.name}
               </li>

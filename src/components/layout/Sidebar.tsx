@@ -14,10 +14,9 @@ import { useSelectedProjectValue } from '../../hooks/useContexts';
 import AddProject from '../AddProject';
 import ProjectsBar from './ProjectsBar';
 
-type Props = {};
 
-const Sidebar = (props: Props) => {
-  const { selectedProject, setSelectedProject } = useSelectedProjectValue();
+const Sidebar = () => {
+  const { setSelectedProject } = useSelectedProjectValue();
   const [active, setActive] = useState('inbox');
   const [showProjects, setShowProjects] = useState(true);
 
@@ -27,7 +26,14 @@ const Sidebar = (props: Props) => {
         <li
           className={active === 'inbox' ? 'active' : undefined}
           data-testid="inbox"
+          role="button"
+          tabIndex={0}
+          arial-label="Mostrar tarefas na caixa de entrada"
           onClick={() => {
+            setActive('inbox');
+            setSelectedProject && setSelectedProject('INBOX');
+          }}
+          onKeyDown={() => {
             setActive('inbox');
             setSelectedProject && setSelectedProject('INBOX');
           }}
@@ -37,7 +43,14 @@ const Sidebar = (props: Props) => {
         <li
           className={active === 'today' ? 'active' : undefined}
           data-testid="today"
+          aria-label="Mostrar tarefas para hoje"
+          role="button"
+          tabIndex={0}
           onClick={() => {
+            setActive('today');
+            setSelectedProject && setSelectedProject('TODAY');
+          }}
+          onKeyDown={() => {
             setActive('today');
             setSelectedProject && setSelectedProject('TODAY');
           }}
@@ -47,7 +60,14 @@ const Sidebar = (props: Props) => {
         <li
           className={active === 'next_7' ? 'active' : undefined}
           data-testid="next_7"
+          tabIndex={0}
+          role="button"
+          aria-label="Mostrar tarefas para próxima semana"
           onClick={() => {
+            setActive('next_7');
+            setSelectedProject && setSelectedProject('NEXT_7');
+          }}
+          onKeyDown={() => {
             setActive('next_7');
             setSelectedProject && setSelectedProject('NEXT_7');
           }}
@@ -57,7 +77,13 @@ const Sidebar = (props: Props) => {
       </ul>
       <div
         className="sidebar__middle"
+        aria-label="Mostar/Esconder projetos"
+        role="button"
+        tabIndex={0}
         onClick={() => setShowProjects(!showProjects)}
+        onKeyDown={() => {
+          setShowProjects(!showProjects);
+        }}
       >
         <span>
           <FaChevronDown

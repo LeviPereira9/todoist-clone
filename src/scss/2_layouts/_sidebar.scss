@@ -92,10 +92,10 @@
         &__inner {
           @extend %box-overlay;
 
-          z-index: 99;
-          width: 200px;
+          z-index: 99 !important;
+          width: 200px !important;
           padding: 10px;
-          top: 10px;
+          top: 10px !important;
           right: 0;
           background-color: white;
 

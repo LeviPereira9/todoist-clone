@@ -4,11 +4,7 @@ import moment from 'moment';
 //Icons
 import { FaFire, FaRegPaperPlane, FaSun } from 'react-icons/fa';
 
-type TaskDateProps = {
-  setTaskDate: React.Dispatch<React.SetStateAction<string>>;
-  showTaskDate: boolean;
-  setShowTaskDate: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import { TaskDateProps } from '../types/myType';
 
 const TaskDate = ({
   setTaskDate,
@@ -22,22 +18,28 @@ const TaskDate = ({
           <ul className="task-date__list">
             <li
               data-testid="task-date-today"
+              aria-label="Atribuir a data da tarefa para hoje"
+              tabIndex={0}
               onClick={() => {
                 setShowTaskDate(false);
                 setTaskDate(moment().format('DD/MM/YYYY'));
               }}
+              //onKeyDown={()=>{...}}
             >
               <span>
-                <FaFire/>
+                <FaFire />
               </span>
               <span>Today</span>
             </li>
             <li
               data-testid="task-date-tomorrow"
+              aria-label="Atribuir a data da tarefa para amanhã"
+              tabIndex={0}
               onClick={() => {
                 setShowTaskDate(false);
                 setTaskDate(moment().add(1, 'day').format('DD/MM/YYYY'));
               }}
+              //onKeyDown={()=>{...}}
             >
               <span>
                 <FaSun />
@@ -46,10 +48,13 @@ const TaskDate = ({
             </li>
             <li
               data-testid="task-date-next-week"
+              aria-label="Atribuir a data da tarefa para semana que vem"
+              tabIndex={0}
               onClick={() => {
                 setShowTaskDate(false);
                 setTaskDate(moment().add(7, 'days').format('DD/MM/YYYY'));
               }}
+              //onKeyDown={()=>{...}}
             >
               <span>
                 <FaRegPaperPlane />

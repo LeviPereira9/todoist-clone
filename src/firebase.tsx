@@ -5,12 +5,12 @@ import { getFirestore, collection, deleteDoc } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyB0yjmndmjYoHfE9UadjHHA_HAUkZjkOis',
-  authDomain: 'todoist-clo-cc9e7.firebaseapp.com',
-  projectId: 'todoist-clo-cc9e7',
-  storageBucket: 'todoist-clo-cc9e7.appspot.com',
-  messagingSenderId: '953578945642',
-  appId: '1:953578945642:web:254491af47eed18db81e13',
+  apiKey: "AIzaSyDFU7QMNFGdVCjHhEH1LMtGATUHvHdD2Qk",
+  authDomain: "todo-tut-308eb.firebaseapp.com",
+  projectId: "todo-tut-308eb",
+  storageBucket: "todo-tut-308eb.appspot.com",
+  messagingSenderId: "981785915146",
+  appId: "1:981785915146:web:69c6917692638275efd4f3"
 };
 
 // Initialize Firebase
