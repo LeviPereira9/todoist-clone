@@ -1,4 +1,4 @@
-/* const path = require('path');
+const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
@@ -25,6 +25,3 @@ module.exports = {
     ],
   },
 };
- */
-
-// npm install babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript --save-dev

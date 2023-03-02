@@ -48,8 +48,13 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.21.0",
     "@firebase/app-types": "^0.9.0",
     "@types/sass": "^1.43.1",
+    "babel-loader": "^9.1.2",
     "node-sass": "^7.0.3",
     "prettier": "^2.8.4",
     "resolve-url-loader": "^5.0.0",
